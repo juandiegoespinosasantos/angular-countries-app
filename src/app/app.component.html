@@ -1,9 +1,21 @@
-<h1>{{ title }}</h1>
+<div class="row container mt-4">
+    <div class="col-3">
+        <h2>Búsquedas</h2>
 
-<app-by-capital></app-by-capital>
+        <hr />
 
-<app-by-country></app-by-country>
+        <ul class="list-group">
+            <li class="list-group-item" routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Buscar país</li>
+            <li class="list-group-item" routerLink="region" routerLinkActive="active">Por región</li>
+            <li class="list-group-item" routerLink="capital" routerLinkActive="active">Por capital</li>
+        </ul>
+    </div>
 
-<app-by-region></app-by-region>
+    <div class="col">
+        <h2></h2>
 
-<app-view-country></app-view-country>
+        <hr />
+
+        <router-outlet></router-outlet>
+    </div>
+</div>
