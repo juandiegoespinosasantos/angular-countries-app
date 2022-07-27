@@ -1,1 +1,45 @@
-<p>by-country works!</p>
+<h2>Por País</h2>
+
+<hr />
+
+<div class="row">
+    <div class="col">
+        <form (ngSubmit)="search();" autocomplete="off">
+            <input type="text" name="query" placeholder="Buscar país..." class="form-control" [(ngModel)]="query" />
+        </form>
+    </div>
+</div>
+
+<hr />
+
+<div *ngIf="ok; else errorAlert" class="row">
+    <div class="col">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Bandera</th>
+                    <th>Nombre</th>
+                    <th>Población</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Bandera</td>
+                    <td>Nombre</td>
+                    <td>123456789</td>
+                    <td><a href="#">Ver...</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<ng-template #errorAlert>
+    <div class="alert alert-danger">
+        No se encontró nada con el término {{ query }}
+    </div>
+</ng-template>
