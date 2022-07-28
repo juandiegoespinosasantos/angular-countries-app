@@ -10,6 +10,7 @@ import { RestCountriesResponse } from "../../interfaces/rest-countries.interface
 })
 export class ByCountryComponent implements OnInit {
 
+    public placeholder: string = "Buscar país...";
     public query: string = "";
     public ok: boolean = true;
 

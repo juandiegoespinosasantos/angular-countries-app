@@ -4,7 +4,7 @@
 
 <div class="row">
     <div class="col">
-        <app-countries-input (onEnter)="search($event);" (onDebounce)="sugest($event);"></app-countries-input>
+        <app-countries-input [placeholder]="placeholder" (onEnter)="search($event);" (onDebounce)="sugest($event);"></app-countries-input>
     </div>
 </div>
 

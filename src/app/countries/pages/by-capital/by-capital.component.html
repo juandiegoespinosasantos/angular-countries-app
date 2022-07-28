@@ -1,1 +1,23 @@
-<p>by-capital works!</p>
+<h2>Por Capital</h2>
+
+<hr />
+
+<div class="row">
+    <div class="col">
+        <app-countries-input [placeholder]="placeholder" (onEnter)="search($event);"></app-countries-input>
+    </div>
+</div>
+
+<hr />
+
+<div *ngIf="ok; else errorAlert" class="row">
+    <div class="col">
+        <app-countries-table [countries]="countries"></app-countries-table>
+    </div>
+</div>
+
+<ng-template #errorAlert>
+    <div class="alert alert-danger">
+        No se encontró nada con el término {{ query }}
+    </div>
+</ng-template>
