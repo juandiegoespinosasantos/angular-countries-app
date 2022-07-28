@@ -25,7 +25,8 @@ export class ByCountryComponent implements OnInit {
         return [...this._countries];
     }
 
-    public search(): void {
+    public search(query: string): void {
+        this.query = query;
         this.ok = true;
 
         console.log(this.query);
