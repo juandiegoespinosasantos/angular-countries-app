@@ -10,12 +10,19 @@ import { RestCountriesResponse } from "../../interfaces/rest-countries.interface
 })
 export class ByCountryComponent implements OnInit {
 
-    public query: string = "Hola Mundo";
+    public query: string = "";
     public ok: boolean = true;
 
-    constructor(private service: CountriesService) { }
+    private _countries: RestCountriesResponse[] = [];
+
+    constructor(private service: CountriesService) {
+    }
 
     ngOnInit(): void {
+    }
+
+    public get countries(): RestCountriesResponse[] {
+        return [...this._countries];
     }
 
     public search(): void {
@@ -27,14 +34,14 @@ export class ByCountryComponent implements OnInit {
             .searchCountry(this.query)
             .subscribe(
                 (resp: RestCountriesResponse[]) => {
-                    resp.forEach(country => {
-                        console.log("Se encontró: ", country.name.official);
-                    });
+                    this._countries = resp;
                 },
                 (err: HttpErrorResponse) => {
+                    this.ok = false;
+
                     console.error(err.message);
 
-                    this.ok = false;
+                    this._countries = [];
                 }
             );
     }

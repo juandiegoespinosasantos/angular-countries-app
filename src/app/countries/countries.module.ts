@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
+import { RouterModule } from "@angular/router";
 
 import { ByCountryComponent } from "./pages/by-country/by-country.component";
 import { ByCapitalComponent } from "./pages/by-capital/by-capital.component";
@@ -16,7 +17,8 @@ import { ViewCountryComponent } from "./pages/view-country/view-country.componen
     ],
     imports: [
         CommonModule,
-        FormsModule
+        FormsModule,
+        RouterModule
     ],
     exports: [
         ByCountryComponent,
