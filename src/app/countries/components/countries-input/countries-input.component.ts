@@ -1,8 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { HttpErrorResponse } from "@angular/common/http";
-
-import { RestCountriesResponse } from "../../interfaces/rest-countries.interface";
-import { CountriesService } from "../../services/countries.service";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { Subject } from "rxjs";
+import { debounceTime } from "rxjs/operators";
 
 @Component({
     selector: "app-countries-input",
@@ -10,18 +8,31 @@ import { CountriesService } from "../../services/countries.service";
 })
 export class CountriesInputComponent implements OnInit {
 
-    public query: string = "";
-
     @Output()
     public onEnter: EventEmitter<string> = new EventEmitter();
 
-    constructor(private service: CountriesService) {
+    @Output()
+    public onDebounce: EventEmitter<string> = new EventEmitter();
+
+    public query: string = "";
+    public debouncer: Subject<string> = new Subject();
+
+    constructor() {
     }
 
     ngOnInit(): void {
+        this.debouncer
+            .pipe(debounceTime(500))
+            .subscribe((query: string) => {
+                this.onDebounce.emit(query);
+            });
     }
 
     public search(): void {
         this.onEnter.emit(this.query);
+    }
+
+    public keyPressed(): void {
+        this.debouncer.next(this.query);
     }
 }

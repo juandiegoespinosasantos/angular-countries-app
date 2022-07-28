@@ -46,4 +46,8 @@ export class ByCountryComponent implements OnInit {
                 }
             );
     }
+
+    public sugest(query: string): void {
+        this.ok = true;
+    }
 }
