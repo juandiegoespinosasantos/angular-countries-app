@@ -24,4 +24,10 @@ export class CountriesService {
 
         return this.httpClient.get<RestCountriesResponse[]>(url);
     }
+
+    public searchByAlpha(alpha: string): Observable<RestCountriesResponse[]> {
+        const url: string = this.apiBaseUrl + "/alpha/" + alpha;
+
+        return this.httpClient.get<RestCountriesResponse[]>(url);
+    }
 }

@@ -1,4 +1,9 @@
 import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { switchMap, tap } from "rxjs/operators";
+
+import { RestCountriesResponse } from "../../interfaces/rest-countries.interface";
+import { CountriesService } from "../../services/countries.service";
 
 @Component({
     selector: "app-view-country",
@@ -6,8 +11,23 @@ import { Component, OnInit } from "@angular/core";
 })
 export class ViewCountryComponent implements OnInit {
 
-    constructor() { }
+    private _country!: RestCountriesResponse;
+
+    constructor(private activedRoute: ActivatedRoute, private countriesService: CountriesService) { }
+
+    public get country(): RestCountriesResponse {
+        return this._country;
+    }
 
     ngOnInit(): void {
+        this.activedRoute
+            .params
+            .pipe(
+                switchMap((param: any) => this.countriesService.searchByAlpha(param.id)),
+                tap(console.log)
+            )
+            .subscribe((resp: RestCountriesResponse[]) => {
+                this._country = resp[0];
+            });
     }
 }
