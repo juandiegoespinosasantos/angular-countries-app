@@ -25,6 +25,10 @@ export class CountriesService {
         return this.search("/alpha/" + alpha);
     }
 
+    public searchRegion(region: string): Observable<RestCountriesResponse[]> {
+        return this.search("/region/" + region);
+    }
+
     private search(endpoint: string): Observable<RestCountriesResponse[]> {
         const url: string = this.apiBaseUrl + endpoint;
 
