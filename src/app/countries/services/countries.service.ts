@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs";
+import { tap } from "rxjs/operators";
 
 import { RestCountriesResponse } from "../interfaces/rest-countries.interface";
 
@@ -14,24 +15,32 @@ export class CountriesService {
     constructor(private httpClient: HttpClient) { }
 
     public searchCountry(query: string): Observable<RestCountriesResponse[]> {
-        return this.search("/name/" + query);
+        return this.search("/name/" + query, true);
     }
 
     public searchCapital(query: string): Observable<RestCountriesResponse[]> {
-        return this.search("/capital/" + query);
+        return this.search("/capital/" + query, true);
     }
 
     public searchByAlpha(alpha: string): Observable<RestCountriesResponse[]> {
-        return this.search("/alpha/" + alpha);
+        return this.search("/alpha/" + alpha, false);
     }
 
     public searchRegion(region: string): Observable<RestCountriesResponse[]> {
-        return this.search("/region/" + region);
+        return this.search("/region/" + region, true);
     }
 
-    private search(endpoint: string): Observable<RestCountriesResponse[]> {
+    private search(endpoint: string, filter: boolean): Observable<RestCountriesResponse[]> {
         const url: string = this.apiBaseUrl + endpoint;
+        const params = new HttpParams();
 
-        return this.httpClient.get<RestCountriesResponse[]>(url);
+        if (filter) params.set("fields", "name,capital,cca2,flags,population");
+
+        return this.httpClient.get<RestCountriesResponse[]>(
+            url, {
+            params: params
+        }).pipe(
+            tap(console.log)
+        );
     }
 }
