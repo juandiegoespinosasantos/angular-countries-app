@@ -13,8 +13,10 @@ export class ByCountryComponent implements OnInit {
     public placeholder: string = "Buscar país...";
     public query: string = "";
     public ok: boolean = true;
+    public showSuggestions: boolean  = false;
 
     private _countries: RestCountriesResponse[] = [];
+    private _sugestions: RestCountriesResponse[] = [];
 
     constructor(private service: CountriesService) {
     }
@@ -26,9 +28,15 @@ export class ByCountryComponent implements OnInit {
         return [...this._countries];
     }
 
+    public get sugestions(): RestCountriesResponse[] {
+        return [...this._sugestions];
+    }
+
     public search(query: string): void {
         this.query = query;
         this.ok = true;
+        this._sugestions = [];
+        this.showSuggestions = false;
 
         console.log(this.query);
 
@@ -49,6 +57,21 @@ export class ByCountryComponent implements OnInit {
     }
 
     public sugest(query: string): void {
+        this.query = query;
         this.ok = true;
+
+        this.service
+            .searchCountry(query)
+            .subscribe(
+                (resp: RestCountriesResponse[]) => {
+                    this.showSuggestions = true;
+                    this._sugestions = resp.splice(0, 5);
+                },
+                (err: HttpErrorResponse) => {
+                    console.error(err.message);
+
+                    this._sugestions = [];
+                }
+            );
     }
 }
