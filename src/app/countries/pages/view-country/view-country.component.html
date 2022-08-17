@@ -1,0 +1,17 @@
+<div *ngIf="country; else loading;" class="row">
+    <div class="col-12">
+        <h1>País: <small>{{ country.name.common }}</small></h1>
+    </div>
+
+    <div class="row">
+        <div class="col-4">
+            <h3>Bandera</h3>
+
+            <img class="img-thumbnail" src="{{ country.flags.png }}" alt="{{ country.name.common }}" />
+        </div>
+    </div>
+</div>
+
+<ng-template #loading>
+    <div class="alert alert-info">Cargando...</div>
+</ng-template>
