@@ -14,19 +14,19 @@ export class CountriesService {
     constructor(private httpClient: HttpClient) { }
 
     public searchCountry(query: string): Observable<RestCountriesResponse[]> {
-        const url: string = this.apiBaseUrl + "/name/" + query;
-
-        return this.httpClient.get<RestCountriesResponse[]>(url);
+        return this.search("/name/" + query);
     }
 
     public searchCapital(query: string): Observable<RestCountriesResponse[]> {
-        const url: string = this.apiBaseUrl + "/capital/" + query;
-
-        return this.httpClient.get<RestCountriesResponse[]>(url);
+        return this.search("/capital/" + query);
     }
 
     public searchByAlpha(alpha: string): Observable<RestCountriesResponse[]> {
-        const url: string = this.apiBaseUrl + "/alpha/" + alpha;
+        return this.search("/alpha/" + alpha);
+    }
+
+    private search(endpoint: string): Observable<RestCountriesResponse[]> {
+        const url: string = this.apiBaseUrl + endpoint;
 
         return this.httpClient.get<RestCountriesResponse[]>(url);
     }
